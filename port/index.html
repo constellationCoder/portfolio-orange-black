@@ -99,22 +99,20 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  /* Desktop: الأسود هو اللي بيتقص */
-  .diagonal-split {
-    clip-path: polygon(0 0, 70% 0, 40% 100%, 0% 100%);
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      120deg,
+      #0e0e0e 62%,
+      #ffffff 62%
+    );
+    z-index: 0;
   }
 
-  /* Tablet: ميل أخف */
-  @media (max-width: 1024px) {
-    .diagonal-split {
-      clip-path: polygon(0 0, 100% 0, 100% 60%, 0% 80%);
-    }
-  }
-
-  /* Mobile: من غير diagonal */
   @media (max-width: 640px) {
-    .diagonal-split {
-      clip-path: none;
+    .hero-bg {
+      background: #0e0e0e; /* mobile كله أسود */
     }
   }
 </style>
@@ -157,13 +155,10 @@
     <!-- Hero Section -->
 <section class="relative min-h-screen w-full flex items-center overflow-hidden">
 
-  <!-- Base (أبيض) -->
-  <div class="absolute inset-0 bg-white"></div>
+  <!-- Background -->
+  <div class="hero-bg"></div>
 
-  <!-- Diagonal (أسود) -->
-  <div class="absolute inset-0 bg-[#0e0e0e] diagonal-split z-10"></div>
-
-  <div class="container mx-auto px-6 md:px-8 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative z-20">
+  <div class="container mx-auto px-6 md:px-8 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative z-10">
 
     <!-- Left Content -->
     <div class="space-y-6 pt-32 lg:pt-0">
@@ -179,11 +174,11 @@
 
       <div class="space-y-4 max-w-lg">
         <p class="text-lg md:text-xl font-semibold text-white/90">
-          UI/UX Designer
+          UI/UX Designer & Front-End Developer
         </p>
         <p class="text-white/50 leading-relaxed">
           Designing clean, functional, user-centered digital experiences
-          with a strong focus on usability and visual clarity.
+          by bridging aesthetics with performance.
         </p>
       </div>
 
