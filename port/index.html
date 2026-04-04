@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>Abdelrhman Magdy Mohamed | UI/UX & Front-End</title>
+    <title>Abdelrhman Magdy Mohamed | Product Designer & UI/UX</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link
       href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap"
@@ -20,53 +20,27 @@
           extend: {
             colors: {
               "primary-dim": "#dc3300",
-              "error-container": "#a70138",
-              "on-secondary-container": "#fff6f2",
-              "on-secondary": "#3d1800",
               background: "#0e0e0e",
-              "surface-dim": "#0e0e0e",
-              "primary-fixed": "#ff7857",
-              "on-surface-variant": "#adaaaa",
-              "on-background": "#ffffff",
-              "secondary-container": "#994700",
-              tertiary: "#e9aaff",
               "surface-container": "#1a1919",
               "surface-container-high": "#201f1f",
               "surface-variant": "#262626",
               "surface-container-low": "#131313",
-              "on-primary": "#5e1000",
+              "on-surface-variant": "#adaaaa",
               "outline-variant": "#484847",
-              "on-tertiary": "#5e1b7b",
               surface: "#0e0e0e",
               secondary: "#ff7b04",
-              "inverse-surface": "#fcf9f8",
-              "on-primary-fixed": "#000000",
-              "inverse-primary": "#b62800",
               outline: "#767575",
               "surface-container-lowest": "#000000",
-              "on-surface": "#ffffff",
-              error: "#ff6e84",
-              "on-error": "#490013",
               "surface-bright": "#2c2c2c",
-              "primary-fixed-dim": "#ff5c35",
-              "secondary-dim": "#fb7800",
               "surface-container-highest": "#262626",
-              "on-primary-container": "#490a00",
-              "surface-tint": "#ff8f74",
-              "inverse-on-surface": "#565555",
               "primary-container": "#ff7857",
               primary: "#ff8f74",
+              "primary-fixed-dim": "#ff5c35",
             },
             fontFamily: {
               headline: ["Manrope", "sans-serif"],
               body: ["Inter", "sans-serif"],
               label: ["Inter", "sans-serif"],
-            },
-            borderRadius: {
-              DEFAULT: "0.25rem",
-              lg: "0.5rem",
-              xl: "1.5rem",
-              full: "9999px",
             },
           },
         },
@@ -95,44 +69,76 @@
         background-clip: text;
       }
 
-      /* ── Diagonal Split ── */
+      /* ── DIAGONAL ── */
       .hero-diagonal {
         position: absolute;
         inset: 0;
         z-index: 1;
         pointer-events: none;
+        overflow: hidden;
       }
 
-      /* Dark left side (covers everything first) */
-      .hero-diagonal::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background: #0e0e0e;
-        z-index: 1;
-      }
-
-      /* White right triangle — clip-path keeps it clean */
       .hero-diagonal::after {
         content: "";
         position: absolute;
         inset: 0;
         background: #ffffff;
-        clip-path: polygon(58% 0, 100% 0, 100% 100%, 42% 100%);
+        clip-path: polygon(72% 0, 100% 0, 100% 100%, 52% 100%);
         z-index: 2;
       }
 
-      /* On mobile, hide the white split entirely */
+      .hero-diagonal-fade {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 48%;
+        width: 120px;
+        background: linear-gradient(to right, #0e0e0e, transparent);
+        z-index: 3;
+        pointer-events: none;
+      }
+
       @media (max-width: 1023px) {
-        .hero-diagonal::after {
+        .hero-diagonal::after,
+        .hero-diagonal-fade {
           display: none;
         }
       }
 
-      /* Ensure hero content sits above the split */
       .hero-content {
         position: relative;
         z-index: 10;
+      }
+
+      /* ── Nav ── */
+      .nav-link {
+        position: relative;
+        padding-bottom: 4px;
+        color: rgba(255, 255, 255, 0.5);
+        transition: color 0.3s ease;
+      }
+
+      .nav-link::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: #ff8f74;
+        transition: width 0.3s ease;
+      }
+
+      .nav-link.active {
+        color: #ff8f74;
+      }
+
+      .nav-link.active::after {
+        width: 100%;
+      }
+
+      .nav-link:hover {
+        color: #ffffff;
       }
 
       /* ── Scrollbar ── */
@@ -165,7 +171,7 @@
         class="flex justify-between items-center px-6 md:px-8 py-5 max-w-7xl mx-auto"
       >
         <a
-          href="#"
+          href="#hero"
           class="text-lg font-extrabold tracking-tighter text-white uppercase font-headline"
         >
           Abdelrhman<span class="text-primary">.</span>
@@ -174,26 +180,14 @@
         <div
           class="hidden md:flex gap-8 font-headline font-bold text-sm tracking-tight"
         >
-          <a
-            class="text-primary border-b-2 border-primary pb-1 transition-colors"
-            href="#work"
-            >Work</a
-          >
-          <a
-            class="text-white/50 hover:text-white transition-colors"
-            href="#expertise"
+          <a class="nav-link" href="#work" data-section="work">Work</a>
+          <a class="nav-link" href="#expertise" data-section="expertise"
             >Expertise</a
           >
-          <a
-            class="text-white/50 hover:text-white transition-colors"
-            href="#experience"
+          <a class="nav-link" href="#experience" data-section="experience"
             >Experience</a
           >
-          <a
-            class="text-white/50 hover:text-white transition-colors"
-            href="#about"
-            >About</a
-          >
+          <a class="nav-link" href="#about" data-section="about">About</a>
         </div>
 
         <a
@@ -206,18 +200,20 @@
     </nav>
 
     <!-- ═══════════════════════════════════════════ -->
-    <!-- HERO  (with diagonal split)                 -->
+    <!-- HERO                                        -->
     <!-- ═══════════════════════════════════════════ -->
-    <section class="relative min-h-screen flex items-center overflow-hidden">
-      <!-- Diagonal background layer -->
+    <section
+      id="hero"
+      class="relative min-h-screen flex items-center overflow-hidden bg-[#0e0e0e]"
+    >
       <div class="hero-diagonal"></div>
+      <div class="hero-diagonal-fade"></div>
 
-      <!-- Content layer — always on top -->
       <div
-        class="hero-content container mx-auto px-6 md:px-8 max-w-7xl grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
+        class="hero-content w-full max-w-7xl mx-auto px-6 md:px-8 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center"
       >
-        <!-- LEFT — dark side -->
-        <div class="space-y-8 pt-32 lg:pt-0">
+        <!-- LEFT -->
+        <div class="lg:col-span-7 space-y-8 pt-28 lg:pt-0">
           <span
             class="inline-block px-4 py-1.5 rounded-full border border-primary/30 text-primary text-[10px] tracking-widest uppercase bg-primary/5 font-bold"
           >
@@ -236,11 +232,12 @@
             <p
               class="text-lg md:text-xl font-semibold text-white/90 font-headline"
             >
-              UI/UX Designer & Front-End Developer
+              Product Designer & UI/UX Specialist
             </p>
             <p class="text-white/40 leading-relaxed text-base">
-              Designing clean, functional, user-centered digital experiences by
-              bridging aesthetics with performance.
+              Crafting intuitive, research-driven digital experiences that put
+              users first — from discovery and wireframes to polished,
+              pixel-perfect interfaces.
             </p>
           </div>
 
@@ -260,30 +257,50 @@
           </div>
         </div>
 
-        <!-- RIGHT — sits on the white triangle -->
-        <div class="relative hidden lg:flex justify-center items-center">
-          <div class="relative w-full max-w-md">
-            <!-- Soft shadow to ground the card on white bg -->
+        <!-- RIGHT -->
+        <div
+          class="lg:col-span-5 relative hidden lg:flex justify-center items-center"
+        >
+          <div class="relative w-full max-w-sm">
             <div
-              class="absolute -inset-6 bg-black/10 blur-[60px] rounded-full"
+              class="absolute -inset-8 bg-black/5 blur-[60px] rounded-full"
             ></div>
 
-            <!-- Mockup Card -->
             <div
-              class="relative rounded-2xl overflow-hidden shadow-2xl shadow-black/30 border border-black/10 bg-[#f5f5f5] p-3 -rotate-6 hover:rotate-0 transition-transform duration-700"
+              class="relative rounded-2xl overflow-hidden shadow-2xl shadow-black/20 border border-black/5 bg-white p-3 -rotate-3 hover:rotate-0 transition-transform duration-700"
             >
-              <div class="rounded-xl overflow-hidden">
+              <div
+                class="rounded-xl overflow-hidden bg-gray-100 aspect-[4/3] flex items-center justify-center"
+              >
                 <img
-                  class="w-full h-auto object-cover"
-                  src="https://via.placeholder.com/500x400/e8e8e8/999?text=Your+UI+Preview"
+                  class="w-full h-full object-cover"
+                  src="https://via.placeholder.com/480x360/f0f0f0/999999?text=Your+UI+Preview"
                   alt="UI Preview"
+                  onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
                 />
+                <div
+                  class="hidden items-center justify-center w-full h-full bg-gray-100 text-gray-400 flex-col gap-3 p-8"
+                >
+                  <svg
+                    class="w-12 h-12 text-gray-300"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909M3.75 21h16.5A2.25 2.25 0 0022.5 18.75V5.25A2.25 2.25 0 0020.25 3H3.75A2.25 2.25 0 001.5 5.25v13.5A2.25 2.25 0 003.75 21z"
+                    />
+                  </svg>
+                  <span class="text-sm font-medium">UI Preview</span>
+                </div>
               </div>
             </div>
 
-            <!-- Floating badge — dark so it reads on white -->
             <div
-              class="absolute -bottom-4 -left-4 bg-[#0e0e0e] border border-white/10 rounded-xl px-4 py-3 shadow-xl"
+              class="absolute -bottom-4 -left-6 bg-[#0e0e0e] border border-white/10 rounded-xl px-4 py-3 shadow-xl z-20"
             >
               <div class="flex items-center gap-2">
                 <div
@@ -294,13 +311,16 @@
                 >
               </div>
             </div>
+
+            <div
+              class="absolute -top-3 -right-3 w-6 h-6 rounded-full bg-primary/80 z-20"
+            ></div>
           </div>
         </div>
       </div>
 
-      <!-- Scroll indicator -->
       <div
-        class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/20 z-10"
+        class="absolute bottom-8 left-8 lg:left-1/4 flex flex-col items-center gap-2 text-white/20 z-10"
       >
         <span class="text-[9px] tracking-widest uppercase font-bold"
           >Scroll</span
@@ -328,15 +348,18 @@
             <h3
               class="text-3xl md:text-4xl font-headline font-extrabold tracking-tight leading-tight"
             >
-              Bridging Code<br />& Creativity
+              Designing Products<br />People Love to Use
             </h3>
             <p
               class="text-on-surface-variant text-base leading-relaxed max-w-xl"
             >
-              I specialize in creating high-performance digital products that
-              don't compromise on aesthetic integrity. As a 4th-year student,
-              I've spent my time refining the balance between pixel-perfect
-              design in Figma and clean, modular code in Vanilla JS and React.
+              I'm a Product Designer focused on creating meaningful,
+              user-centered digital experiences. From initial research and
+              strategy through wireframes, prototyping, and high-fidelity UI — I
+              own the full design process. I also understand front-end
+              fundamentals (HTML, CSS, JavaScript), which helps me design with
+              real-world feasibility in mind and communicate seamlessly with
+              development teams.
             </p>
           </div>
           <div
@@ -347,41 +370,70 @@
         <!-- Skills Card -->
         <div
           id="expertise"
-          class="md:col-span-5 bg-surface-container-highest rounded-2xl p-10 space-y-6 border border-white/[0.03]"
+          class="md:col-span-5 bg-surface-container-highest rounded-2xl p-10 space-y-8 border border-white/[0.03]"
         >
-          <span
-            class="font-label text-[10px] tracking-[0.2em] text-primary uppercase font-bold"
-            >Stack & Expertise</span
-          >
-          <div class="flex flex-wrap gap-2">
+          <!-- Primary Skills — Design -->
+          <div class="space-y-4">
             <span
-              class="px-4 py-2.5 bg-background border border-outline-variant/15 rounded-full text-sm font-medium text-white/80 hover:text-white hover:border-primary/30 transition-colors"
-              >UI/UX Design</span
+              class="font-label text-[10px] tracking-[0.2em] text-primary uppercase font-bold"
+              >Design Expertise</span
             >
+            <div class="flex flex-wrap gap-2">
+              <span
+                class="px-4 py-2.5 bg-primary/10 border border-primary/20 rounded-full text-sm font-semibold text-primary"
+                >Product Design</span
+              >
+              <span
+                class="px-4 py-2.5 bg-primary/10 border border-primary/20 rounded-full text-sm font-semibold text-primary"
+                >UI/UX Design</span
+              >
+              <span
+                class="px-4 py-2.5 bg-primary/10 border border-primary/20 rounded-full text-sm font-semibold text-primary"
+                >UX Research</span
+              >
+              <span
+                class="px-4 py-2.5 bg-primary/10 border border-primary/20 rounded-full text-sm font-semibold text-primary"
+                >Wireframing</span
+              >
+              <span
+                class="px-4 py-2.5 bg-primary/10 border border-primary/20 rounded-full text-sm font-semibold text-primary"
+                >Prototyping</span
+              >
+              <span
+                class="px-4 py-2.5 bg-primary/10 border border-primary/20 rounded-full text-sm font-semibold text-primary"
+                >Design Systems</span
+              >
+              <span
+                class="px-4 py-2.5 bg-primary/10 border border-primary/20 rounded-full text-sm font-semibold text-primary"
+                >Figma</span
+              >
+              <span
+                class="px-4 py-2.5 bg-primary/10 border border-primary/20 rounded-full text-sm font-semibold text-primary"
+                >Usability Testing</span
+              >
+            </div>
+          </div>
+
+          <!-- Secondary Skills — Code awareness -->
+          <div class="space-y-4">
             <span
-              class="px-4 py-2.5 bg-background border border-outline-variant/15 rounded-full text-sm font-medium text-white/80 hover:text-white hover:border-primary/30 transition-colors"
-              >Figma</span
+              class="font-label text-[10px] tracking-[0.2em] text-white/30 uppercase font-bold"
+              >Also Familiar With</span
             >
-            <span
-              class="px-4 py-2.5 bg-background border border-outline-variant/15 rounded-full text-sm font-medium text-white/80 hover:text-white hover:border-primary/30 transition-colors"
-              >HTML / CSS</span
-            >
-            <span
-              class="px-4 py-2.5 bg-background border border-outline-variant/15 rounded-full text-sm font-medium text-white/80 hover:text-white hover:border-primary/30 transition-colors"
-              >JavaScript</span
-            >
-            <span
-              class="px-4 py-2.5 bg-background border border-outline-variant/15 rounded-full text-sm font-medium text-white/80 hover:text-white hover:border-primary/30 transition-colors"
-              >React</span
-            >
-            <span
-              class="px-4 py-2.5 bg-background border border-outline-variant/15 rounded-full text-sm font-medium text-white/80 hover:text-white hover:border-primary/30 transition-colors"
-              >Tailwind CSS</span
-            >
-            <span
-              class="px-4 py-2.5 bg-background border border-outline-variant/15 rounded-full text-sm font-medium text-white/80 hover:text-white hover:border-primary/30 transition-colors"
-              >Vanilla JS</span
-            >
+            <div class="flex flex-wrap gap-2">
+              <span
+                class="px-4 py-2.5 bg-background border border-outline-variant/15 rounded-full text-sm font-medium text-white/50"
+                >HTML / CSS</span
+              >
+              <span
+                class="px-4 py-2.5 bg-background border border-outline-variant/15 rounded-full text-sm font-medium text-white/50"
+                >JavaScript</span
+              >
+              <span
+                class="px-4 py-2.5 bg-background border border-outline-variant/15 rounded-full text-sm font-medium text-white/50"
+                >Tailwind CSS</span
+              >
+            </div>
           </div>
         </div>
       </div>
@@ -400,7 +452,7 @@
           <h2
             class="text-3xl md:text-4xl font-headline font-extrabold tracking-tight mt-2"
           >
-            Projects
+            Case Studies
           </h2>
         </div>
         <a
@@ -443,7 +495,8 @@
               class="text-on-surface-variant text-base leading-relaxed max-w-md"
             >
               A mobile UX case study for detecting toxic plants using image
-              scanning. Designed for clarity, speed, and safety.
+              scanning. Designed for clarity, speed, and safety to help users
+              instantly identify harmful herbs.
             </p>
 
             <div class="flex flex-wrap gap-x-4 gap-y-2 items-center pt-2">
@@ -454,7 +507,7 @@
                 class="h-1 w-1 bg-outline-variant rounded-full hidden sm:block"
               ></div>
               <span class="text-sm text-white/40"
-                >UX Research · UI Design · Prototyping</span
+                >UX Research · Wireframes · UI Design · Prototyping</span
               >
             </div>
 
@@ -501,7 +554,6 @@
     <!-- ═══════════════════════════════════════════ -->
     <section class="px-6 md:px-8 max-w-7xl mx-auto py-8">
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
-        <!-- Project 1 -->
         <a
           href="https://www.behance.net/gallery/215456023/curved-carousel-cinema"
           target="_blank"
@@ -518,7 +570,7 @@
           </div>
           <span
             class="text-[10px] text-white/30 font-bold tracking-widest uppercase"
-            >UI Experiment</span
+            >UI Concept</span
           >
           <h4
             class="text-xl font-headline font-bold mt-2 mb-2 group-hover:text-primary transition-colors"
@@ -526,11 +578,11 @@
             Curved Cinema Carousel
           </h4>
           <p class="text-on-surface-variant text-sm leading-relaxed">
-            Immersive UI experiment exploring curved layouts for media browsing.
+            Immersive interface concept exploring curved layouts for cinematic
+            media browsing experiences.
           </p>
         </a>
 
-        <!-- Project 2 -->
         <a
           href="https://www.behance.net/gallery/215454777/Nike_Store"
           target="_blank"
@@ -547,7 +599,7 @@
           </div>
           <span
             class="text-[10px] text-white/30 font-bold tracking-widest uppercase"
-            >E-Commerce</span
+            >E-Commerce UI</span
           >
           <h4
             class="text-xl font-headline font-bold mt-2 mb-2 group-hover:text-primary transition-colors"
@@ -555,9 +607,91 @@
             Nike Store
           </h4>
           <p class="text-on-surface-variant text-sm leading-relaxed">
-            Modern e-commerce UI focused on product discovery and conversion.
+            Modern e-commerce interface designed around product discovery,
+            visual hierarchy, and seamless checkout flow.
           </p>
         </a>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- DESIGN PROCESS                              -->
+    <!-- ═══════════════════════════════════════════ -->
+    <section class="py-16 px-6 md:px-8 max-w-7xl mx-auto">
+      <div
+        class="bg-surface-container-low rounded-2xl p-10 md:p-14 border border-white/[0.03]"
+      >
+        <span
+          class="font-label text-[10px] tracking-[0.2em] text-primary uppercase font-bold"
+          >How I Work</span
+        >
+        <h3
+          class="text-2xl md:text-3xl font-headline font-extrabold tracking-tight mt-2 mb-10"
+        >
+          Design Process
+        </h3>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+          <div class="space-y-3">
+            <div
+              class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center"
+            >
+              <span class="material-symbols-outlined text-primary text-2xl"
+                >search</span
+              >
+            </div>
+            <h5 class="font-headline font-bold text-base">Discover</h5>
+            <p class="text-on-surface-variant text-sm leading-relaxed">
+              User research, competitive analysis, stakeholder interviews to
+              understand the problem deeply.
+            </p>
+          </div>
+
+          <div class="space-y-3">
+            <div
+              class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center"
+            >
+              <span class="material-symbols-outlined text-primary text-2xl"
+                >account_tree</span
+              >
+            </div>
+            <h5 class="font-headline font-bold text-base">Define</h5>
+            <p class="text-on-surface-variant text-sm leading-relaxed">
+              User flows, information architecture, wireframes to structure the
+              experience before pixels.
+            </p>
+          </div>
+
+          <div class="space-y-3">
+            <div
+              class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center"
+            >
+              <span class="material-symbols-outlined text-primary text-2xl"
+                >palette</span
+              >
+            </div>
+            <h5 class="font-headline font-bold text-base">Design</h5>
+            <p class="text-on-surface-variant text-sm leading-relaxed">
+              High-fidelity UI, design systems, and interactive prototypes in
+              Figma that feel production-ready.
+            </p>
+          </div>
+
+          <div class="space-y-3">
+            <div
+              class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center"
+            >
+              <span class="material-symbols-outlined text-primary text-2xl"
+                >labs</span
+              >
+            </div>
+            <h5 class="font-headline font-bold text-base">Test & Iterate</h5>
+            <p class="text-on-surface-variant text-sm leading-relaxed">
+              Usability testing, feedback loops, and data-informed refinements
+              until the experience is right.
+            </p>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -595,14 +729,15 @@
                 class="absolute left-0 top-1.5 w-4 h-4 rounded-full bg-primary ring-4 ring-primary/15"
               ></div>
               <h5 class="text-lg font-bold font-headline leading-tight">
-                DEPI (Digital Egypt Pioneers Initiative)
+                GDG on Campus
               </h5>
               <p class="text-primary text-sm font-bold mt-1 mb-2">
-                Front-End React Track
+                Product Design Track
               </p>
               <p class="text-on-surface-variant text-sm leading-relaxed">
-                Deep-diving into advanced React architectures, state management,
-                and production-ready codebases.
+                Collaborating on user-centric products, conducting UX research,
+                leading design sprints, and building high-fidelity prototypes
+                within cross-functional teams.
               </p>
             </div>
 
@@ -611,14 +746,31 @@
                 class="absolute left-0 top-1.5 w-4 h-4 rounded-full bg-outline-variant ring-4 ring-outline-variant/15"
               ></div>
               <h5 class="text-lg font-bold font-headline leading-tight">
-                GDG on Campus
+                DEPI (Digital Egypt Pioneers Initiative)
               </h5>
               <p class="text-primary text-sm font-bold mt-1 mb-2">
-                Product Design Track
+                UI/UX Design Track
               </p>
               <p class="text-on-surface-variant text-sm leading-relaxed">
-                Collaborating on user-centric products, conducting UX research,
-                and building high-fidelity prototypes.
+                Intensive program focused on design thinking, user research
+                methodologies, interaction design, and building
+                production-quality interfaces.
+              </p>
+            </div>
+
+            <div class="relative pl-10">
+              <div
+                class="absolute left-0 top-1.5 w-4 h-4 rounded-full bg-outline-variant ring-4 ring-outline-variant/15"
+              ></div>
+              <h5 class="text-lg font-bold font-headline leading-tight">
+                4th-Year Student
+              </h5>
+              <p class="text-primary text-sm font-bold mt-1 mb-2">
+                Computer Science / IT
+              </p>
+              <p class="text-on-surface-variant text-sm leading-relaxed">
+                Academic foundation in software logic and front-end basics,
+                giving me a technical lens to bridge design and development.
               </p>
             </div>
           </div>
@@ -634,7 +786,7 @@
               >verified</span
             >
             <h6 class="font-bold text-sm leading-tight">
-              Google UX Design Certificate
+              Google UX Design Professional Certificate
             </h6>
           </div>
           <div
@@ -645,18 +797,7 @@
               >school</span
             >
             <h6 class="font-bold text-sm leading-tight">
-              DEPI Front-End Specialization
-            </h6>
-          </div>
-          <div
-            class="bg-surface-container-highest rounded-2xl p-6 flex flex-col justify-center items-center text-center space-y-3 border border-white/[0.03] hover:border-primary/10 transition-colors group"
-          >
-            <span
-              class="material-symbols-outlined text-primary text-3xl group-hover:scale-110 transition-transform"
-              >code</span
-            >
-            <h6 class="font-bold text-sm leading-tight">
-              Advanced JS Algorithms
+              DEPI UI/UX Design Specialization
             </h6>
           </div>
           <div
@@ -668,6 +809,17 @@
             >
             <h6 class="font-bold text-sm leading-tight">
               Visual Design Fundamentals
+            </h6>
+          </div>
+          <div
+            class="bg-surface-container-highest rounded-2xl p-6 flex flex-col justify-center items-center text-center space-y-3 border border-white/[0.03] hover:border-primary/10 transition-colors group"
+          >
+            <span
+              class="material-symbols-outlined text-primary text-3xl group-hover:scale-110 transition-transform"
+              >psychology</span
+            >
+            <h6 class="font-bold text-sm leading-tight">
+              Interaction Design Foundations
             </h6>
           </div>
         </div>
@@ -695,7 +847,7 @@
               <h2
                 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-headline font-extrabold tracking-tight leading-[1.05]"
               >
-                Let's create something
+                Let's design something
                 <span class="text-gradient">extraordinary</span> together.
               </h2>
               <div class="space-y-2 pt-4">
@@ -724,9 +876,9 @@
               >
               <a
                 class="text-white/30 hover:text-white transition-colors font-bold uppercase tracking-widest text-xs"
-                href="https://github.com/constellationCoder"
+                href="https://www.behance.net/abdelrhmanmagdymohamed"
                 target="_blank"
-                >GitHub ↗</a
+                >Behance ↗</a
               >
               <a
                 class="text-white/30 hover:text-white transition-colors font-bold uppercase tracking-widest text-xs"
@@ -735,9 +887,9 @@
               >
               <a
                 class="text-white/30 hover:text-white transition-colors font-bold uppercase tracking-widest text-xs"
-                href="https://www.behance.net/abdelrhmanmagdymohamed"
+                href="https://github.com/constellationCoder"
                 target="_blank"
-                >Behance ↗</a
+                >GitHub ↗</a
               >
             </div>
           </div>
@@ -748,7 +900,9 @@
     <!-- ═══════════════════════════════════════════ -->
     <!-- FOOTER                                      -->
     <!-- ═══════════════════════════════════════════ -->
-    <footer class="bg-background w-full py-10 px-6 md:px-8 border-t border-white/[0.03]">
+    <footer
+      class="bg-background w-full py-10 px-6 md:px-8 border-t border-white/[0.03]"
+    >
       <div
         class="flex flex-col md:flex-row justify-between items-center gap-4 w-full max-w-7xl mx-auto text-[10px] font-semibold tracking-widest uppercase"
       >
@@ -758,7 +912,7 @@
           Abdelrhman<span class="text-primary">.</span>
         </div>
         <div class="text-white/25 text-center">
-          © 2025 Designed & Built by Abdelrhman Magdy. All rights reserved.
+          © 2025 Designed by Abdelrhman Magdy. All rights reserved.
         </div>
         <div class="flex gap-5">
           <a
@@ -769,18 +923,80 @@
           >
           <a
             class="text-white/25 hover:text-primary transition-colors"
-            href="https://github.com/constellationCoder"
-            target="_blank"
-            >GitHub</a
-          >
-          <a
-            class="text-white/25 hover:text-primary transition-colors"
             href="https://www.behance.net/abdelrhmanmagdymohamed"
             target="_blank"
             >Behance</a
           >
+          <a
+            class="text-white/25 hover:text-primary transition-colors"
+            href="https://github.com/constellationCoder"
+            target="_blank"
+            >GitHub</a
+          >
         </div>
       </div>
     </footer>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- ACTIVE NAV SCRIPT                           -->
+    <!-- ═══════════════════════════════════════════ -->
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const navLinks = document.querySelectorAll(".nav-link");
+        const sections = document.querySelectorAll("section[id]");
+
+        const sectionToNav = {
+          hero: null,
+          about: "about",
+          expertise: "expertise",
+          work: "work",
+          experience: "experience",
+          contact: null,
+        };
+
+        function clearActive() {
+          navLinks.forEach((link) => link.classList.remove("active"));
+        }
+
+        function setActive(sectionId) {
+          clearActive();
+          const targetNav = sectionToNav[sectionId];
+          if (!targetNav) return;
+          const activeLink = document.querySelector(
+            `.nav-link[data-section="${targetNav}"]`
+          );
+          if (activeLink) activeLink.classList.add("active");
+        }
+
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                setActive(entry.target.id);
+              }
+            });
+          },
+          {
+            rootMargin: "-20% 0px -60% 0px",
+            threshold: 0,
+          }
+        );
+
+        sections.forEach((section) => observer.observe(section));
+
+        navLinks.forEach((link) => {
+          link.addEventListener("click", (e) => {
+            e.preventDefault();
+            const targetId = link.getAttribute("data-section");
+            const targetSection = document.getElementById(targetId);
+            if (targetSection) {
+              clearActive();
+              link.classList.add("active");
+              targetSection.scrollIntoView({ behavior: "smooth" });
+            }
+          });
+        });
+      });
+    </script>
   </body>
 </html>
