@@ -88,32 +88,132 @@
         background-clip: text;
       }
 
-      /* ── PAGE LOADER ── */
-      .page-loader {
+      /* ── CINEMATIC OPENING LOADER ── */
+      body.intro-active {
+        overflow: hidden !important;
+      }
+
+      .intro-loader {
         position: fixed;
         inset: 0;
-        z-index: 9999;
+        width: 100vw;
+        height: 100vh;
+        z-index: 99999;
+        pointer-events: all;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        background: transparent;
+        transition: opacity 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+
+      .intro-loader.done {
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      /* Expanding Aperture Frame */
+      .intro-frame {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) translateZ(0);
+        width: clamp(260px, 72vw, 340px);
+        height: 96px;
+        box-shadow: 0 0 0 200vmax #0e0e0e;
+        border: 1.5px solid transparent;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        will-change: width, height, border-color;
+        transition: border-color 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+                    width 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+                    height 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      /* Stage: Rectangle forms around brand */
+      .intro-frame.formed {
+        border-color: rgba(255, 143, 116, 0.55);
+      }
+
+      /* Stage: Rectangle expands outward uncovering homepage */
+      .intro-frame.expanding {
+        width: calc(100vw + 80px);
+        height: calc(100vh + 80px);
+        border-color: rgba(255, 143, 116, 0.2);
+      }
+
+      /* Inner dark fill concealing homepage until expansion begins */
+      .intro-frame-fill {
+        position: absolute;
+        inset: -2px;
         background: #0e0e0e;
+        z-index: 1;
+        pointer-events: none;
+        transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+
+      .intro-frame.expanding .intro-frame-fill {
+        opacity: 0;
+      }
+
+      /* Centered Brand Text */
+      .intro-brand {
+        position: relative;
+        z-index: 2;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        gap: 1rem;
-        transition: opacity 0.4s ease, visibility 0.4s ease;
-      }
-      .page-loader.done {
-        opacity: 0;
-        visibility: hidden;
+        text-align: center;
         pointer-events: none;
+        user-select: none;
+        opacity: 0;
+        transform: translateY(12px);
+        filter: blur(6px);
+        transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+                    transform 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+                    filter 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+        will-change: opacity, transform, filter;
       }
-      .loader-line {
-        width: 0;
-        height: 2px;
-        background: linear-gradient(90deg, #ff8f74, #ff5c35);
-        animation: loaderGrow 0.5s cubic-bezier(.22,1,.36,1) forwards;
+
+      .intro-brand.visible {
+        opacity: 1;
+        transform: translateY(0);
+        filter: blur(0);
       }
-      @keyframes loaderGrow {
-        to { width: 80px; }
+
+      .intro-brand.fade-out {
+        opacity: 0;
+        transform: translateY(-6px) scale(0.96);
+        filter: blur(2px);
+        transition: opacity 0.35s ease, transform 0.35s ease, filter 0.35s ease;
+      }
+
+      .intro-brand-name {
+        font-family: 'Manrope', sans-serif;
+        font-weight: 800;
+        font-size: clamp(1.6rem, 4.5vw, 2.25rem);
+        letter-spacing: -0.035em;
+        color: #ffffff;
+        line-height: 1.1;
+      }
+
+      .intro-brand-role {
+        font-family: 'Inter', sans-serif;
+        font-size: 0.68rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.45);
+        font-weight: 500;
+        margin-top: 0.45rem;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .intro-loader {
+          display: none !important;
+        }
       }
 
       /* ── NAV ── */
@@ -515,21 +615,26 @@
         .hummingbird, .orbit-ring, .orbit-label {
           animation: none !important;
         }
-        .page-loader {
+        .intro-loader {
           display: none !important;
         }
       }
     </style>
   </head>
 
-  <body class="font-body selection:bg-primary selection:text-white overflow-x-hidden">
+  <body class="font-body selection:bg-primary selection:text-white overflow-x-hidden intro-active">
 
-    <!-- ══════════════ PAGE LOADER ══════════════ -->
-    <div class="page-loader" id="pageLoader">
-      <span class="text-lg font-extrabold tracking-tighter text-white font-headline">
-        Abdelrhman<span class="text-primary">.</span>
-      </span>
-      <div class="loader-line"></div>
+    <!-- ══════════════ CINEMATIC INTRO LOADER ══════════════ -->
+    <div class="intro-loader" id="introLoader" aria-label="Loading Abdelrhman's Portfolio" role="status">
+      <div class="intro-frame" id="introFrame">
+        <div class="intro-frame-fill" id="introFrameFill"></div>
+        <div class="intro-brand" id="introBrand">
+          <div class="intro-brand-name">
+            Abdelrhman<span class="text-primary">.</span>
+          </div>
+          <div class="intro-brand-role">Product Designer &amp; UI/UX</div>
+        </div>
+      </div>
     </div>
 
     <!-- ══════════════ CUSTOM CURSOR ══════════════ -->
@@ -1399,12 +1504,60 @@
     <script>
       document.addEventListener("DOMContentLoaded", () => {
 
-        /* ── PAGE LOADER & HERO TRIGGER ── */
-        const loader = document.getElementById("pageLoader");
-        setTimeout(() => {
-          if (loader) loader.classList.add("done");
+        /* ── CINEMATIC OPENING SEQUENCE ── */
+        const introLoader = document.getElementById("introLoader");
+        const introFrame = document.getElementById("introFrame");
+        const introBrand = document.getElementById("introBrand");
+
+        const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+        function completeIntro() {
+          if (introLoader) {
+            introLoader.classList.add("done");
+            setTimeout(() => {
+              introLoader.style.display = "none";
+            }, 400);
+          }
+          document.body.classList.remove("intro-active");
           document.body.classList.add("site-ready");
-        }, 500);
+        }
+
+        if (prefersReducedMotion || !introLoader || !introFrame || !introBrand) {
+          completeIntro();
+        } else {
+          // 1. Reveal Brand Name (t = 120ms)
+          setTimeout(() => {
+            introBrand.classList.add("visible");
+          }, 120);
+
+          // 2. Form Rectangular Frame Around Brand (t = 1250ms)
+          setTimeout(() => {
+            introFrame.classList.add("formed");
+          }, 1250);
+
+          // 3. Expand Frame Outward & Dissolve Fill + Fade Brand (t = 1750ms)
+          setTimeout(() => {
+            introFrame.classList.add("expanding");
+            introBrand.classList.add("fade-out");
+          }, 1750);
+
+          // 4. Trigger Site Content Reveal (t = 2200ms)
+          setTimeout(() => {
+            document.body.classList.add("site-ready");
+          }, 2200);
+
+          // 5. Fade out and clean up loader (t = 2700ms)
+          setTimeout(() => {
+            introLoader.classList.add("done");
+            document.body.classList.remove("intro-active");
+            setTimeout(() => {
+              introLoader.style.display = "none";
+            }, 400);
+          }, 2700);
+
+          // Failsafe timer (3500ms)
+          setTimeout(completeIntro, 3500);
+        }
 
         /* ── MOBILE MENU TOGGLE ── */
         const mobileMenuBtn = document.getElementById("mobileMenuBtn");
